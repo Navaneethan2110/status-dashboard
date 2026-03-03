@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getLatestStatus, getHistory, addWebsite } from "./api";
 import WebsiteCard from "./components/WebsiteCard";
 import StatusChart from "./components/StatusChart";
+import { API_BASE } from "./api";
 
 export default function App() {
   const [sites, setSites] = useState([]);
@@ -22,10 +23,22 @@ export default function App() {
   };
 
   const handleAdd = async () => {
-    if (!urlInput) return;
+   if (!urlInput) return;
+
+  try {
+    //Add website
     await addWebsite(urlInput);
-    setUrlInput("");
+
+    //Immediately trigger health check
+    await fetch(`${API_BASE}/api/run`, { method: "POST" });
+
+    //Reload data
     await loadData();
+
+    setUrlInput("");
+  } catch (err) {
+    console.error(err);
+  }
   };
 
  useEffect(() => {
