@@ -25,7 +25,7 @@ export default function App() {
     if (!urlInput) return;
     await addWebsite(urlInput);
     setUrlInput("");
-    loadData();
+    await loadData();
   };
 
  useEffect(() => {
