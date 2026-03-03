@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://navaneethan.github.io/website-status-checker",
+  "homepage": "https://Navaneethan2110.github.io/website-status-checker",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
@@ -15,7 +15,6 @@
   "dependencies": {
     "axios": "^1.13.6",
     "chart.js": "^4.5.1",
-    "gh-pages": "^6.3.0",
     "react": "^19.2.0",
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.2.0"
@@ -29,6 +28,7 @@
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
+    "gh-pages": "^6.3.0",
     "globals": "^16.5.0",
     "postcss": "^8.5.8",
     "tailwindcss": "^4.2.1",
