@@ -28,11 +28,26 @@ export default function App() {
     loadData();
   };
 
-  useEffect(() => {
-    loadData();
-    const interval = setInterval(loadData, 30000); // auto refresh
-    return () => clearInterval(interval);
-  }, []);
+ useEffect(() => {
+  let mounted = true;
+
+  const fetchData = async () => {
+    try {
+      const res = await getLatestStatus();
+      if (mounted) {
+        setSites(res.data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchData();
+
+  return () => {
+    mounted = false;
+  };
+}, []);
 
   return (
     <div className={dark ? "bg-gray-900 min-h-screen text-white" : "bg-white min-h-screen text-black"}>
