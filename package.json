@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Navaneethan2110.github.io/website-status-checker",
+  "homepage": "https://navaneethan2110.github.io/status-dashboard/",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
