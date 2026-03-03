@@ -4,16 +4,22 @@ import WebsiteCard from "./components/WebsiteCard";
 import StatusChart from "./components/StatusChart";
 import { API_BASE } from "./api";
 
+
 export default function App() {
   const [sites, setSites] = useState([]);
   const [selected, setSelected] = useState(null);
   const [history, setHistory] = useState([]);
   const [urlInput, setUrlInput] = useState("");
   const [dark, setDark] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const loadData = async () => {
-    const res = await getLatestStatus();
-    setSites(res.data);
+    try {
+      const res = await getLatestStatus();
+      setSites(res.data);
+    } catch (err) {
+        console.error("Load error:", err);
+    }
   };
 
   const selectSite = async (site) => {
@@ -24,20 +30,19 @@ export default function App() {
 
   const handleAdd = async () => {
    if (!urlInput) return;
-
+   setLoading(true);
   try {
     //Add website
     await addWebsite(urlInput);
-
-    //Immediately trigger health check
-    await fetch(`${API_BASE}/api/run`, { method: "POST" });
-
+    
     //Reload data
     await loadData();
-
     setUrlInput("");
+
   } catch (err) {
-    console.error(err);
+    console.error("Adding Website Failed", err);
+  } finally {
+    setLoading(false);
   }
   };
 
@@ -83,10 +88,12 @@ export default function App() {
             className="flex-1 p-2 rounded text-black"
           />
           <button
-            onClick={handleAdd}
-            className="px-4 py-2 bg-green-500 rounded"
+            onClick={handleAdd} disabled={loading}
+            className={`px-4 py-2 rounded text-white transition
+    ${loading ? "bg-green-300 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"}
+  `}
           >
-            Add
+           {loading ? "Adding..." : "Add"}
           </button>
         </div>
 
